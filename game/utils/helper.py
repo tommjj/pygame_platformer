@@ -14,10 +14,13 @@ def can_move_here(x, y, width, height ,map: list[list[int]] ):
 def is_solid(x: float, y: float, map: list[list[int]] ):
     max_width = len(map[0]) * Game_constant.TILES_SIZE
     
-    if (x < 0 or x >= max_width):
+    if (x < 0):
         return True    
     if (y < 0 or y >= Game_constant.GAME_HEIGHT):
         return True
+    
+    if x >= Game_constant.GAME_WIDTH:
+        return False
     
     x_index = int(x / Game_constant.TILES_SIZE)
     y_index = int(y / Game_constant.TILES_SIZE)

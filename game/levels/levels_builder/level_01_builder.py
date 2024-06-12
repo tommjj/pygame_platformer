@@ -2,7 +2,7 @@ from game.entities.trap import Trap
 from game.levels.level import Game_level
 
 
-def map_01_builder(playing):
+def level_01_builder(playing):
     map = Game_level()
     map.set_map([[21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21],
                 [21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21],

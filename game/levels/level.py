@@ -8,11 +8,9 @@ from game.utils.constants.game_constant import Game_constant
 
     
 class Game_level:
-    map: list[list[int]] = [[]]
-    traps: list[Trap] = []
-
     def __init__(self) -> None:
-        pass
+        self.map: list[list[int]] = [[]]
+        self.traps: list[Trap] = []
     
     def set_player_spawn(self, x: int, y: int): 
         self.player_spawn_x = x

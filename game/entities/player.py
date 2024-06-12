@@ -108,6 +108,9 @@ class Player:
             self.ani_tick = 0
     
     def update_pos(self):
+        if self.hit_box.x > Game_constant.GAME_WIDTH:
+            self.win()
+            return
         
         self.moving = False
         
@@ -199,3 +202,6 @@ class Player:
             if not self.in_air:
                 if not is_entity_on_floor(self.hit_box, self.playing.level_manager.get_current_map()):
                     self.in_air = True
+                    
+    def win(self):
+        self.playing.level_manager.next_level()
