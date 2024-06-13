@@ -1,5 +1,4 @@
 from pygame import Rect
-import pygame
 from game.entities.entity import Entity
 from game.utils.constants.game_constant import Game_constant
 
