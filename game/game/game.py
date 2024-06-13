@@ -2,7 +2,8 @@ import pygame
 
 from game.game_state.menu import Game_menu
 from game.game_state.playing import Playing
-from game.game_state.state import Game_state 
+from game.game_state.state import Game_state
+from game.utils.loader import res_path 
 from ..utils.constants.game_constant import Game_constant 
 from ..lib.sound import SOUND_END_EVENT, Sound, get_sound
 
@@ -18,7 +19,6 @@ class Game:
         self.pygame.init()
         self.screen = self.pygame.display.set_mode((Game_constant.GAME_WIDTH, Game_constant.GAME_HEIGHT))
         self.clock = self.pygame.time.Clock()
-        self.my_font = pygame.font.SysFont('Comic Sans MS', 30)
         
         self.playing = Playing(self)
         self.menu = Game_menu(self)
@@ -81,7 +81,6 @@ class Game:
             self.playing.draw(self.screen)
         if self.state == Game_state.menu:
             self.menu.draw(self.screen)
-        
             
         pygame.display.flip()   
         

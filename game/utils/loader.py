@@ -4,10 +4,15 @@ import pygame
 
 from game.utils.constants.game_constant import Game_constant
 
+NUMBER_OF_TILES = 128
+
 player_scale = None
 player_animations = None
 
 blocks = None
+
+def res_path(path):
+    return os.path.join( os.getcwd(), f'game/res/{path}')
 
 def loader(path):
     return pygame.image.load(os.path.join( os.getcwd(), path))
@@ -45,7 +50,7 @@ def load_blocks():
     
     if blocks == None:
         blocks = [None]
-        for i in range(1, 126):
+        for i in range(1, NUMBER_OF_TILES+1):
             blocks.append(tile_loader(i))
     
     return blocks

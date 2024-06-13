@@ -5,7 +5,7 @@ from game.levels.background import draw_background
 from game.levels.level import Game_level
 from game.levels.levels_builder.level_builder import get_level_builder
 from game.utils.constants.game_constant import Game_constant
-from game.utils.loader import load_blocks
+from game.utils.loader import NUMBER_OF_TILES, load_blocks
 
 
 class Levels_manager:
@@ -37,7 +37,7 @@ class Levels_manager:
         for y, row in enumerate(self.level.map):
             if row != None:
                 for x, block in enumerate(row):
-                    if block < 126 and block > 0:
+                    if block <= NUMBER_OF_TILES and block > 0:
                         surface.blit(self.blocks[block], (Game_constant.TILES_SIZE * x,
                                      Game_constant.TILES_SIZE * y, Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
 
@@ -48,7 +48,7 @@ class Levels_manager:
         for y, row in enumerate(self.layout):
             if row != None:
                 for x, block in enumerate(row):
-                    if block < 126 and block > 0:
+                    if block <= NUMBER_OF_TILES and block > 0:
                         surface.blit(self.blocks[block], (Game_constant.TILES_SIZE * x,
                                      Game_constant.TILES_SIZE * y, Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
 
