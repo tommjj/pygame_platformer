@@ -11,7 +11,7 @@ OVERLAY = loader_with_scale('game/res/ui/overlay.png', 10 * Game_constant.TILES_
 
 class High_score_button(Button):
     def __init__(self, game) -> None:
-        super().__init__(Rect(9 * Game_constant.TILES_SIZE, 8.5 * Game_constant.TILES_SIZE, 10 * Game_constant.TILES_SIZE, 3 * Game_constant.TILES_SIZE))
+        super().__init__(Rect(9 * Game_constant.TILES_SIZE, 10.5 * Game_constant.TILES_SIZE, 10 * Game_constant.TILES_SIZE, 3 * Game_constant.TILES_SIZE))
         self.game = game
         self.text = Game_font(int(1.5 * Game_constant.TILES_SIZE)).render('High score', True, (255, 255, 255))
         self.text_rect = self.text.get_rect()

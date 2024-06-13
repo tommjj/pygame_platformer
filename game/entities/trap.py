@@ -44,3 +44,4 @@ class Nail_trap(Entity):
 
     def draw(self, surface: pygame.Surface):
         surface.blit(self.img, (self.hit_box.x, self.hit_box.y, Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
+    

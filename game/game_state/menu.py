@@ -3,6 +3,7 @@ import pygame
 
 from game.game_state.state import Game_state
 from game.levels.background import draw_background
+from game.lib.font import Game_font
 from game.lib.inputs import Key_events, Mouse_events
 from game.ui.button import Button
 from game.ui.play_button import  Play_button
@@ -18,10 +19,20 @@ class Game_menu(Key_events, Mouse_events):
         self.buttons: list[Button] = []
         self.buttons.append(Play_button(game))
         self.buttons.append(High_score_button(game))
+        
+        self.text = Game_font(int(4.5 * Game_constant.TILES_SIZE)).render('PLATFORMER', True, (255, 255, 255))
+        self.text_shadow = Game_font(int(4.5 * Game_constant.TILES_SIZE)).render('PLATFORMER', True, (180, 180, 200))
+        self.text_rect = self.text.get_rect()
+        self.text_rect.x = Game_constant.GAME_WIDTH / 2 - self.text_rect.width / 2 + 7 * Game_constant.SCALE
+        self.text_rect.y = Game_constant.TILES_SIZE * 1.5
+        
     
     def draw(self, surface: pygame.Surface):
         draw_background(surface, self.mouse_x)
         surface.blit(IMAGE_BG, (0,0))
+        
+        surface.blit(self.text_shadow, (self.text_rect.x + 4 * Game_constant.SCALE, self.text_rect.y + 4 * Game_constant.SCALE))
+        surface.blit(self.text, self.text_rect)
         
         for button in self.buttons:
             button.draw(surface)

@@ -11,12 +11,12 @@ OVERLAY = loader_with_scale('game/res/ui/overlay.png', 10 * Game_constant.TILES_
 
 class Play_button(Button):
     def __init__(self, game) -> None:
-        super().__init__(Rect(9 * Game_constant.TILES_SIZE, 4 * Game_constant.TILES_SIZE, 10 * Game_constant.TILES_SIZE, 4 * Game_constant.TILES_SIZE))
+        super().__init__(Rect(9 * Game_constant.TILES_SIZE, 6 * Game_constant.TILES_SIZE, 10 * Game_constant.TILES_SIZE, 4 * Game_constant.TILES_SIZE))
         self.game = game
-        self.text = Game_font(3 * Game_constant.TILES_SIZE).render('Play', True, (255, 255, 255))
+        self.text = Game_font(3 * Game_constant.TILES_SIZE).render('START', True, (255, 255, 255))
         self.text_rect = self.text.get_rect()
-        self.text_rect.x = self.hit_box.x + self.hit_box.width / 2 - self.text_rect.width / 2
-        self.text_rect.y = self.hit_box.y + self.hit_box.height / 2 - self.text_rect.height / 2
+        self.text_rect.x = self.hit_box.x + self.hit_box.width / 2 - self.text_rect.width / 2 + 7 * Game_constant.SCALE
+        self.text_rect.y = self.hit_box.y + self.hit_box.height / 2 - self.text_rect.height / 2 + 7 * Game_constant.SCALE
         
     def draw(self, surface: Surface):
         surface.blit(IMAGE_BUTTON, self.hit_box)

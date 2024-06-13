@@ -4,7 +4,6 @@ from game.entities.player import Player
 from game.levels.level_manager import Levels_manager
 from game.lib.inputs import Key_events, Mouse_events
 
-
 class Playing(Key_events, Mouse_events):
     player = None
     level_manager = None
@@ -12,6 +11,8 @@ class Playing(Key_events, Mouse_events):
     def __init__(self, game) -> None:
         self.player = Player(self)
         self.level_manager = Levels_manager(self)
+        
+       
         
     def set_level(self):
         pass

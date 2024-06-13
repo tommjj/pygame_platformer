@@ -63,3 +63,4 @@ def is_entity_on_floor(hit_box: pygame.Rect, map: list[list[int]]):
 
 def is_tiles(block) -> bool:
     return block > 0 and block < 82
+

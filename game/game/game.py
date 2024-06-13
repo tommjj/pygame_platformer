@@ -3,6 +3,7 @@ import pygame
 from game.game_state.menu import Game_menu
 from game.game_state.playing import Playing
 from game.game_state.state import Game_state
+from game.lib.font import Game_font
 from ..utils.constants.game_constant import Game_constant 
 from ..lib.sound import SOUND_END_EVENT, get_sound
 
@@ -24,6 +25,21 @@ class Game:
         
     
     def run(self): 
+        text_title = Game_font(int(4.5 * Game_constant.TILES_SIZE)).render('PLATFORMER', True, (255, 255, 255))
+        text_shadow_title = Game_font(int(4.5 * Game_constant.TILES_SIZE)).render('PLATFORMER', True, (180, 180, 200))
+        text_rect_title = text_title.get_rect()
+        text_rect_title.x = Game_constant.GAME_WIDTH / 2 - text_rect_title.width / 2 + 7 * Game_constant.SCALE
+        text_rect_title.y = Game_constant.TILES_SIZE * 2
+        
+        pygame.draw.rect(self.screen, '#267ae9', (0,0, Game_constant.GAME_WIDTH, Game_constant.GAME_HEIGHT))   
+        text = Game_font(int(1.5 * Game_constant.TILES_SIZE)).render('Loading...', True, (255, 255, 255))
+        text_rect = text.get_rect()
+        
+        self.screen.blit(text, (Game_constant.GAME_WIDTH - text_rect.w - 20, Game_constant.GAME_HEIGHT - text_rect.h - 10))
+        self.screen.blit(text_shadow_title, (text_rect_title.x + 4 * Game_constant.SCALE, text_rect_title.y + 4 * Game_constant.SCALE))
+        self.screen.blit(text_title, text_rect_title)
+        
+        pygame.display.flip()  
         get_sound().play_music(get_sound().soundtrack)
         
         running = True
@@ -43,7 +59,6 @@ class Game:
                 if event.type == pygame.MOUSEMOTION:
                     self.mouse_motion(event)
                 if event.type == SOUND_END_EVENT:
-                    print('end')
                     get_sound().play_music(get_sound().soundtrack)
 
             self.update()
