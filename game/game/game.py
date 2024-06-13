@@ -6,6 +6,7 @@ from game.game_state.state import Game_state
 from game.lib.font import Game_font
 from ..utils.constants.game_constant import Game_constant 
 from ..lib.sound import SOUND_END_EVENT, get_sound
+from game.database import High_score
 
 GAME_TICK = 120
 
@@ -22,7 +23,7 @@ class Game:
         
         self.playing = Playing(self)
         self.menu = Game_menu(self)
-        
+   
     
     def run(self): 
         text_title = Game_font(int(4.5 * Game_constant.TILES_SIZE)).render('PLATFORMER', True, (255, 255, 255))
