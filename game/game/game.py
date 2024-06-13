@@ -8,9 +8,9 @@ from ..lib.sound import SOUND_END_EVENT, get_sound
 
 GAME_TICK = 120
 
-
 class Game:
     state = Game_state.menu
+    tick = 0
     
     def __init__(self) -> None:
         pygame.mixer.pre_init(44100, -16, 2, 4096)
@@ -47,7 +47,12 @@ class Game:
                     get_sound().play_music(get_sound().soundtrack)
 
             self.update()
-            self.draw()
+            if self.tick > 0:
+                self.draw()
+                self.tick = 0
+            else:
+                self.tick += 1
+                
             self.clock.tick(GAME_TICK)  
             
     def set_state(self, state):
@@ -78,10 +83,16 @@ class Game:
             self.menu.mouse_up(event)
             
     def mouse_motion(self ,event: pygame.event.Event):
-        pass
+        if self.state == Game_state.playing:
+            self.playing.mouse_motion(event)
+        if self.state == Game_state.menu:
+            self.menu.mouse_motion(event)
 
     def update(self):
-        self.playing.update()
+        if self.state == Game_state.playing:
+            self.playing.update()
+        if self.state == Game_state.menu:
+            self.menu.update()
     
     def draw(self):
         if self.state == Game_state.playing:
