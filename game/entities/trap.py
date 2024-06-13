@@ -1,3 +1,4 @@
+from xml.dom.minidom import Entity
 import pygame
 
 from game.utils.constants.game_constant import Game_constant
@@ -8,12 +9,11 @@ RIGHT_NAIL_TRAP_IMAGE = pygame.transform.rotate(BOTTOM_NAIL_TRAP_IMAGE, 90)
 TOP_NAIL_TRAP_IMAGE = pygame.transform.rotate(BOTTOM_NAIL_TRAP_IMAGE, 180)
 LEFT_NAIL_TRAP_IMAGE =  pygame.transform.rotate(BOTTOM_NAIL_TRAP_IMAGE, -90)
 
-class Nail_trap:
+class Nail_trap(Entity):
     TOP = 'TOP'
     BOTTOM = 'BOTTOM'
     RIGHT = 'RIGHT'
     LEFT = 'LEFT'
-    
     
     def __init__(self, playing, x, y, dir = 'BOTTOM') -> None:
         self.playing = playing

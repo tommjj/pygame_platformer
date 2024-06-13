@@ -1,16 +1,16 @@
 import pygame
 
-from game.entities.trap import Nail_trap
+from game.entities.entity import Entity
 from game.levels.background import draw_background
 from game.levels.level import Game_level
-from game.levels.levels_builder.level_builder import get_level_builder
+from game.levels.levels_builder.level_builder import NUMBER_OF_LEVEL, get_level_builder
 from game.utils.constants.game_constant import Game_constant
 from game.utils.loader import NUMBER_OF_TILES, load_blocks
 
 
 class Levels_manager:
     level: Game_level = []
-    traps: list[Nail_trap] = []
+    traps: list[Entity] = []
     layout: list[list[int]] = []
     current_level = 1
 
@@ -65,4 +65,6 @@ class Levels_manager:
 
     def next_level(self):
         self.current_level += 1
+        if self.current_level > NUMBER_OF_LEVEL:
+            self.current_level = 1
         self.reset()

@@ -2,9 +2,10 @@ import pygame
 
 from game.entities.player import Player
 from game.levels.level_manager import Levels_manager
+from game.lib.inputs import Key_events, Mouse_events
 
 
-class Playing:
+class Playing(Key_events, Mouse_events):
     player = None
     level_manager = None
     
@@ -33,9 +34,4 @@ class Playing:
     def key_up(self ,event: pygame.event.Event):
         self.player.key_up(event)
         
-    def mouse_down(self ,event: pygame.event.Event):
-        pass
-            
-    def mouse_up(self ,event: pygame.event.Event):
-        pass
         

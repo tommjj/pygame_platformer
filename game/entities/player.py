@@ -2,14 +2,14 @@ from enum import Enum
 
 import pygame
 
-from game.levels.level_manager import Levels_manager
+from game.entities.entity import Entity
 from game.lib.sound import get_sound
 from game.utils.constants import player_constant
 from game.utils.constants.game_constant import Game_constant
 from game.utils.helper import can_move_here, get_entity_x_pos_next_to_wall, get_entity_y_pos_under_roof_of_above_floor, is_entity_on_floor
 from game.utils.loader import load_player_animations
 
-class Player:
+class Player(Entity):
     
     ani_tick = 0
     ani_index = 0
@@ -46,7 +46,7 @@ class Player:
     def __init__(self, playing) -> None:
         self.playing = playing
         self.load_animation()
-        
+
     def load_animation(self):
         w = 85 * Game_constant.SCALE
         self.animations = load_player_animations(w)

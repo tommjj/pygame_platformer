@@ -3,15 +3,14 @@ import pygame
 from game.game_state.menu import Game_menu
 from game.game_state.playing import Playing
 from game.game_state.state import Game_state
-from game.utils.loader import res_path 
 from ..utils.constants.game_constant import Game_constant 
-from ..lib.sound import SOUND_END_EVENT, Sound, get_sound
+from ..lib.sound import SOUND_END_EVENT, get_sound
 
 GAME_TICK = 120
 
 
 class Game:
-    state = Game_state.playing
+    state = Game_state.menu
     
     def __init__(self) -> None:
         pygame.mixer.pre_init(44100, -16, 2, 4096)
@@ -41,6 +40,8 @@ class Game:
                     self.mouse_down(event)
                 if event.type == pygame.MOUSEBUTTONUP:
                     self.mouse_up(event)
+                if event.type == pygame.MOUSEMOTION:
+                    self.mouse_motion(event)
                 if event.type == SOUND_END_EVENT:
                     print('end')
                     get_sound().play_music(get_sound().soundtrack)
@@ -48,6 +49,9 @@ class Game:
             self.update()
             self.draw()
             self.clock.tick(GAME_TICK)  
+            
+    def set_state(self, state):
+        self.state = state
 
     def key_down(self ,event: pygame.event.Event):
         if self.state == Game_state.playing:
@@ -72,6 +76,9 @@ class Game:
             self.playing.mouse_up(event)
         if self.state == Game_state.menu:
             self.menu.mouse_up(event)
+            
+    def mouse_motion(self ,event: pygame.event.Event):
+        pass
 
     def update(self):
         self.playing.update()
