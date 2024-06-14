@@ -4,6 +4,7 @@ from game.game_state.menu import Game_menu
 from game.game_state.playing import Playing
 from game.game_state.state import Game_state
 from game.lib.font import Game_font
+from game.utils.loader import loader
 from ..utils.constants.game_constant import Game_constant 
 from ..lib.sound import SOUND_END_EVENT, get_sound
 from game.database import High_score
@@ -19,6 +20,8 @@ class Game:
         self.pygame = pygame
         self.pygame.init()
         self.screen = self.pygame.display.set_mode((Game_constant.GAME_WIDTH, Game_constant.GAME_HEIGHT))
+        pygame.display.set_caption('PLATFORMER')
+        pygame.display.set_icon(loader('game/res/icon.png'))
         self.clock = self.pygame.time.Clock()
         
         self.playing = Playing(self)

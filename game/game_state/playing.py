@@ -3,6 +3,7 @@ import pygame
 from game.entities.player import Player
 from game.levels.level_manager import Levels_manager
 from game.lib.inputs import Key_events, Mouse_events
+from game.ui.life_bar import Life_bar
 
 class Playing(Key_events, Mouse_events):
     player = None
@@ -11,8 +12,7 @@ class Playing(Key_events, Mouse_events):
     def __init__(self, game) -> None:
         self.player = Player(self)
         self.level_manager = Levels_manager(self)
-        
-       
+        self.life_bar = Life_bar(self.player)
         
     def set_level(self):
         pass
@@ -26,6 +26,7 @@ class Playing(Key_events, Mouse_events):
         self.level_manager.draw_tiles(surface)
         
         self.player.draw(surface)
+        self.life_bar.draw(surface)
     
     def key_down(self ,event: pygame.event.Event):
         self.player.key_down(event)

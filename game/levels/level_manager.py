@@ -12,7 +12,7 @@ class Levels_manager:
     level: Game_level = []
     traps: list[Entity] = []
     layout: list[list[int]] = []
-    current_level = 3
+    current_level = 1
 
     def __init__(self, playing) -> None:
         self.playing = playing

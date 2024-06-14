@@ -1,5 +1,3 @@
-from enum import Enum
-
 import pygame
 
 from game.entities.entity import Entity
@@ -42,6 +40,8 @@ class Player(Entity):
     flip_w = 1
     
     hit_box = pygame.Rect(0 , 0, 19 * Game_constant.SCALE, 28 * Game_constant.SCALE)
+    
+    life_points = 3
         
     def __init__(self, playing) -> None:
         self.playing = playing
@@ -55,6 +55,12 @@ class Player(Entity):
         self.update_pos()
         self.set_animation()
         self.update_animation()
+        
+        if not self.dead: return
+        if self.life_points <= 0:
+            pass
+        else:
+            self.playing.level_manager.reset()
     
     def jump_handler(self):
         if self.in_air and not self.double_jump:
@@ -97,8 +103,10 @@ class Player(Entity):
         
         if self.ani_tick > self.ani_speed:
             if self.player_action == player_constant.DEAD:
-                self.ani_index = player_constant.get_sprites_amount(self.player_action) - 1 if self.ani_index >= player_constant.get_sprites_amount(self.player_action) - 1 else self.ani_index + 1
-                self.dead = True
+                is_last_f = self.ani_index >= player_constant.get_sprites_amount(self.player_action) - 1
+                
+                self.ani_index = player_constant.get_sprites_amount(self.player_action) - 1 if is_last_f else self.ani_index + 1
+                if is_last_f: self.dead = True
             
             elif self.player_action == player_constant.JUMP:
                 self.ani_index = self.ani_index - 1 if self.ani_index >= player_constant.get_sprites_amount(self.player_action) - 1 else self.ani_index + 1
@@ -193,6 +201,7 @@ class Player(Entity):
         if not self.die:
             self.die = True
             get_sound().play_sfx(get_sound().die)
+            self.life_points -= 1
             
     def to_alive(self):
         if  self.die:
