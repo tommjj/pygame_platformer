@@ -11,8 +11,8 @@ from game.database import High_score
 GAME_TICK = 120
 
 class Game:
-    state = Game_state.menu
-    tick = 0
+    _state = Game_state.menu
+    _tick = 0
     
     def __init__(self) -> None:
         pygame.mixer.pre_init(44100, -16, 2, 4096)
@@ -63,57 +63,57 @@ class Game:
                     get_sound().play_music(get_sound().soundtrack)
 
             self.update()
-            if self.tick > 0:
+            if self._tick > 0:
                 self.draw()
-                self.tick = 0
+                self._tick = 0
             else:
-                self.tick += 1
+                self._tick += 1
                 
             self.clock.tick(GAME_TICK)  
             
     def set_state(self, state):
-        self.state = state
+        self._state = state
 
     def key_down(self ,event: pygame.event.Event):
-        if self.state == Game_state.playing:
+        if self._state == Game_state.playing:
             self.playing.key_down(event)
-        if self.state == Game_state.menu:
+        if self._state == Game_state.menu:
             self.menu.key_down(event)
             
     def key_up(self ,event: pygame.event.Event):
-        if self.state == Game_state.playing:
+        if self._state == Game_state.playing:
             self.playing.key_up(event)
-        if self.state == Game_state.menu:
+        if self._state == Game_state.menu:
             self.menu.key_up(event)
         
     def mouse_down(self ,event: pygame.event.Event):
-        if self.state == Game_state.playing:
+        if self._state == Game_state.playing:
             self.playing.mouse_down(event)
-        if self.state == Game_state.menu:
+        if self._state == Game_state.menu:
             self.menu.mouse_down(event)
             
     def mouse_up(self ,event: pygame.event.Event):
-        if self.state == Game_state.playing:
+        if self._state == Game_state.playing:
             self.playing.mouse_up(event)
-        if self.state == Game_state.menu:
+        if self._state == Game_state.menu:
             self.menu.mouse_up(event)
             
     def mouse_motion(self ,event: pygame.event.Event):
-        if self.state == Game_state.playing:
+        if self._state == Game_state.playing:
             self.playing.mouse_motion(event)
-        if self.state == Game_state.menu:
+        if self._state == Game_state.menu:
             self.menu.mouse_motion(event)
 
     def update(self):
-        if self.state == Game_state.playing:
+        if self._state == Game_state.playing:
             self.playing.update()
-        if self.state == Game_state.menu:
+        if self._state == Game_state.menu:
             self.menu.update()
     
     def draw(self):
-        if self.state == Game_state.playing:
+        if self._state == Game_state.playing:
             self.playing.draw(self.screen)
-        if self.state == Game_state.menu:
+        if self._state == Game_state.menu:
             self.menu.draw(self.screen)
             
         pygame.display.flip()   
