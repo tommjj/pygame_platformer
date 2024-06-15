@@ -10,6 +10,7 @@ class Game_level:
     def __init__(self) -> None:
         self.map: list[list[int]] = [[]]
         self.entities: list[Entity] = []
+        self.block_entities: list[Entity] = []
 
     def set_player_spawn(self, x: int, y: int):
         self.player_spawn_x = x
@@ -21,5 +22,9 @@ class Game_level:
     def set_map(self, map):
         self.map = map
 
-    def add_entity(self, trap):
-        self.entities.append(trap)
+    def add_entity(self, entity):
+        self.entities.append(entity)
+        
+    def add_block_entity(self, entity):
+        self.block_entities.append(entity)
+        self.entities.append(entity)

@@ -9,6 +9,7 @@ NUMBER_OF_TILES = 128
 player_scale = None
 player_animations = None
 card_animation = None
+entry_animation = None
 
 blocks = None
 
@@ -66,3 +67,14 @@ def load_card_animation():
             card_animation.append(loader_with_scale(f'game/res/card/res_{i}.png', 24 * Game_constant.SCALE, 24 * Game_constant.SCALE))
             
     return card_animation
+
+def load_entry_animation():
+    global entry_animation
+    
+    if entry_animation == None:
+        entry_animation = []
+        for i in range(8):
+            entry_animation.append(loader_with_scale(f'game/res/entry/e_{i}.png', Game_constant.TILES_SIZE, 2 * Game_constant.TILES_SIZE))
+            
+    return entry_animation  
+    

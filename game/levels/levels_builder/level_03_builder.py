@@ -1,4 +1,6 @@
+from game.entities.card import Card
 from game.entities.die_zone import Die_zone
+from game.entities.entry import Entry
 from game.entities.trap import Nail_trap
 from game.levels.level import Game_level
 
@@ -15,8 +17,8 @@ def level_03_builder(playing):
             [0, 0, 0, 0, 16, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 22, 23, 8, 0, 0, 128, 82, 85, 0, 128, 0, 0, 0],
             [0, 0, 82, 84, 0, 36, 16, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 22, 23, 8, 128, 0, 0, 0, 128, 0, 0, 0],
             [0, 0, 0, 19, 0, 128, 0, 0, 16, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 22, 23, 8, 18, 18, 71, 18, 18, 18],
-            [0, 0, 0, 19, 0, 128, 0, 0, 0, 0, 16, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 22, 23, 23, 23, 23, 23, 23],
-            [27, 27, 27, 27, 27, 27, 0, 0, 0, 0, 0, 0, 16, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 19, 0, 128, 0, 0, 0, 0, 16, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 22, 23, 23, 8, 0, 0, 0],
+            [27, 27, 27, 27, 27, 27, 0, 0, 0, 0, 0, 0, 16, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 23, 23, 23],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             [110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 110, 107, 121, 0, 0, 0, 16, 5, 6, 0, 0, 0, 119, 122, 0, 126, 0, 0],
             [32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32],
@@ -51,5 +53,13 @@ def level_03_builder(playing):
     map.add_entity(Nail_trap(playing, 18, 11))
     map.add_entity(Nail_trap(playing, 20, 12))
     map.add_entity(Nail_trap(playing, 22, 12))
+    
+    card = Card(playing, 12 , 5)
+    entry = Entry(27, 11)
+    
+    entry.add_card(card)
+    map.add_block_entity(entry)
+    map.add_entity(card)
+    
     
     return map, layout

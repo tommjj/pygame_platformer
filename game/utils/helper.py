@@ -1,15 +1,23 @@
 import pygame
 
+from game.entities.entity import Entity
 from game.utils.constants.game_constant import Game_constant
 
 
-def can_move_here(x, y, width, height ,map: list[list[int]] ):
+def can_move_here(x, y, width, height ,map: list[list[int]], block_entities: list[Entity] = [] ):
+    can_move = False
+    
     if not is_solid(x, y, map):
         if not is_solid(x + width, y + height, map):
             if not is_solid(x + width, y, map):
                 if not is_solid(x, y + height, map):
-                    return True
-    return False
+                    can_move = True
+    
+    for e in block_entities:
+        if e.get_hit_box().colliderect(x, y, width, height):
+            return False
+    
+    return can_move
 
 def is_solid(x: float, y: float, map: list[list[int]] ):
     max_width = len(map[0]) * Game_constant.TILES_SIZE

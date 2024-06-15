@@ -24,6 +24,9 @@ class Levels_manager:
     def get_current_map(self):
         return self.level.map
 
+    def get_block_entities(self):
+        return self.level.block_entities
+
     def update(self):
         for trap in self.level.entities:
             trap.update()
