@@ -1,6 +1,6 @@
 import pygame
 
-from game.entities.trap import Nail_trap
+from game.entities.entity import Entity
 from game.utils.constants.game_constant import Game_constant
 
 # from ..utils.constants.game_constant import
@@ -9,7 +9,7 @@ from game.utils.constants.game_constant import Game_constant
 class Game_level:
     def __init__(self) -> None:
         self.map: list[list[int]] = [[]]
-        self.traps: list[Nail_trap] = []
+        self.entities: list[Entity] = []
 
     def set_player_spawn(self, x: int, y: int):
         self.player_spawn_x = x
@@ -21,5 +21,5 @@ class Game_level:
     def set_map(self, map):
         self.map = map
 
-    def add_trap(self, trap):
-        self.traps.append(trap)
+    def add_entity(self, trap):
+        self.entities.append(trap)

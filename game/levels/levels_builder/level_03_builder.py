@@ -41,15 +41,15 @@ def level_03_builder(playing):
    
     map.set_player_spawn(0 , 4)
 
-    map.add_trap(Nail_trap(playing, 4, 4))
-    map.add_trap(Nail_trap(playing, 6, 5))
-    map.add_trap(Nail_trap(playing, 8, 6))
-    map.add_trap(Nail_trap(playing, 10, 7))
-    map.add_trap(Nail_trap(playing, 12, 8))
-    map.add_trap(Nail_trap(playing, 14, 9))
-    map.add_trap(Nail_trap(playing, 16, 10))
-    map.add_trap(Nail_trap(playing, 18, 11))
-    map.add_trap(Nail_trap(playing, 20, 12))
-    map.add_trap(Nail_trap(playing, 22, 12))
+    map.add_entity(Nail_trap(playing, 4, 4))
+    map.add_entity(Nail_trap(playing, 6, 5))
+    map.add_entity(Nail_trap(playing, 8, 6))
+    map.add_entity(Nail_trap(playing, 10, 7))
+    map.add_entity(Nail_trap(playing, 12, 8))
+    map.add_entity(Nail_trap(playing, 14, 9))
+    map.add_entity(Nail_trap(playing, 16, 10))
+    map.add_entity(Nail_trap(playing, 18, 11))
+    map.add_entity(Nail_trap(playing, 20, 12))
+    map.add_entity(Nail_trap(playing, 22, 12))
     
     return map, layout

@@ -18,6 +18,7 @@ class Sound:
         self.soundtrack = mixer.Sound(os.path.join( os.getcwd(), "game/res/audio/soundtrack.ogg"))
         self.die = mixer.Sound(os.path.join( os.getcwd(), "game/res/audio/die.ogg"))
         self.jump = mixer.Sound("game/res/audio/jump.ogg")
+        self.card_collect = mixer.Sound("game/res/audio/card_collect.ogg")
         
     def play_sfx(self, sfx):
         if self.allowSFX:

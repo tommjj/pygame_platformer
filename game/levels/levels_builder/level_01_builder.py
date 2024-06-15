@@ -1,3 +1,4 @@
+from game.entities.card import Card
 from game.entities.trap import Nail_trap
 from game.levels.level import Game_level
 
@@ -31,9 +32,11 @@ def level_01_builder(playing):
                 [0, 0, 0, 0, 0, 0, 109, 110, 110, 110, 110, 110, 110, 0, 0, 0, 110, 110, 110, 110, 110, 110, 3, 21, 21, 21, 21, 21],
                 None, None, None]
     
-    map.add_trap(Nail_trap(playing, 13 , 10))
-    map.add_trap(Nail_trap(playing, 14 , 10))
-    map.add_trap(Nail_trap(playing, 15 , 10))
+    map.add_entity(Nail_trap(playing, 13 , 10))
+    map.add_entity(Nail_trap(playing, 14 , 10))
+    map.add_entity(Nail_trap(playing, 15 , 10))
+    
+    map.add_entity(Card(playing, 18 , 11))
     map.set_player_spawn(1 , 11)
     
     return map, layout

@@ -40,7 +40,7 @@ def level_02_builder(playing):
    
     map.set_player_spawn(0 , 11)
 
-    map.add_trap(Nail_trap(playing, 15, 10, Nail_trap.RIGHT))
-    map.add_trap(Die_zone(playing, 6, 14, 10, 1))
+    map.add_entity(Nail_trap(playing, 15, 10, Nail_trap.RIGHT))
+    map.add_entity(Die_zone(playing, 6, 14, 10, 1))
     
     return map, layout

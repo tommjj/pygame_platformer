@@ -25,7 +25,7 @@ class Levels_manager:
         return self.level.map
 
     def update(self):
-        for trap in self.level.traps:
+        for trap in self.level.entities:
             trap.update()
 
     def draw_background(self, surface: pygame.Surface):
@@ -41,7 +41,7 @@ class Levels_manager:
                         surface.blit(self.blocks[block], (Game_constant.TILES_SIZE * x,
                                      Game_constant.TILES_SIZE * y, Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
 
-        for trap in self.level.traps:
+        for trap in self.level.entities:
             trap.draw(surface)
 
     def draw_layout(self, surface: pygame.Surface):

@@ -25,6 +25,7 @@ class Game_menu(Key_events, Mouse_events):
         self.text_rect = self.text.get_rect()
         self.text_rect.x = Game_constant.GAME_WIDTH / 2 - self.text_rect.width / 2 + 7 * Game_constant.SCALE
         self.text_rect.y = Game_constant.TILES_SIZE * 1.5
+        self.mouse_x = 0
         
     
     def draw(self, surface: pygame.Surface):
