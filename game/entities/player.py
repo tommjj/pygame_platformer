@@ -41,7 +41,7 @@ class Player(Entity):
     
     hit_box = pygame.Rect(0 , 0, 19 * Game_constant.SCALE, 28 * Game_constant.SCALE)
     
-    life_points = 3
+    life_points = 5
         
     def __init__(self, playing) -> None:
         self.playing = playing

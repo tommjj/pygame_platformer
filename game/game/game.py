@@ -7,7 +7,7 @@ from game.lib.font import Game_font
 from game.utils.loader import loader
 from ..utils.constants.game_constant import Game_constant 
 from ..lib.sound import SOUND_END_EVENT, get_sound
-from game.database import High_score
+from game.game_state.high_score import High_score
 
 GAME_TICK = 120
 
@@ -26,6 +26,7 @@ class Game:
         
         self.playing = Playing(self)
         self.menu = Game_menu(self)
+        self.high_score = High_score(self)
    
     
     def run(self): 
@@ -80,44 +81,58 @@ class Game:
     def key_down(self ,event: pygame.event.Event):
         if self._state == Game_state.playing:
             self.playing.key_down(event)
-        if self._state == Game_state.menu:
+        elif self._state == Game_state.menu:
             self.menu.key_down(event)
+        elif self._state == Game_state.high_score:
+            self.high_score.key_down(event)
             
     def key_up(self ,event: pygame.event.Event):
         if self._state == Game_state.playing:
             self.playing.key_up(event)
-        if self._state == Game_state.menu:
+        elif self._state == Game_state.menu:
             self.menu.key_up(event)
+        elif self._state == Game_state.high_score:
+            self.high_score.key_up(event)
         
     def mouse_down(self ,event: pygame.event.Event):
         if self._state == Game_state.playing:
             self.playing.mouse_down(event)
-        if self._state == Game_state.menu:
+        elif self._state == Game_state.menu:
             self.menu.mouse_down(event)
+        elif self._state == Game_state.high_score:
+            self.high_score.mouse_down(event)
             
     def mouse_up(self ,event: pygame.event.Event):
         if self._state == Game_state.playing:
             self.playing.mouse_up(event)
-        if self._state == Game_state.menu:
+        elif self._state == Game_state.menu:
             self.menu.mouse_up(event)
+        elif self._state == Game_state.high_score:
+            self.high_score.mouse_up(event)
             
     def mouse_motion(self ,event: pygame.event.Event):
         if self._state == Game_state.playing:
             self.playing.mouse_motion(event)
-        if self._state == Game_state.menu:
+        elif self._state == Game_state.menu:
             self.menu.mouse_motion(event)
+        elif self._state == Game_state.high_score:
+            self.high_score.mouse_motion(event)
 
     def update(self):
         if self._state == Game_state.playing:
             self.playing.update()
-        if self._state == Game_state.menu:
+        elif self._state == Game_state.menu:
             self.menu.update()
+        elif self._state == Game_state.high_score:
+            self.high_score.update()
     
     def draw(self):
         if self._state == Game_state.playing:
             self.playing.draw(self.screen)
-        if self._state == Game_state.menu:
+        elif self._state == Game_state.menu:
             self.menu.draw(self.screen)
+        elif self._state == Game_state.high_score:
+            self.high_score.draw(self.screen)
             
         pygame.display.flip()   
         
