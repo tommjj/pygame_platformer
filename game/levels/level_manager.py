@@ -7,12 +7,13 @@ from game.levels.levels_builder.level_builder import NUMBER_OF_LEVEL, get_level_
 from game.utils.constants.game_constant import Game_constant
 from game.utils.loader import NUMBER_OF_TILES, load_blocks
 
+START_LEVEL = 4
 
 class Levels_manager:
     level: Game_level = []
     traps: list[Entity] = []
     layout: list[list[int]] = []
-    current_level = 1
+    current_level = START_LEVEL
 
     def __init__(self, playing) -> None:
         self.playing = playing

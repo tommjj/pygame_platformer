@@ -10,6 +10,7 @@ player_scale = None
 player_animations = None
 card_animation = None
 entry_animation = None
+jumper_animation = None
 
 blocks = None
 
@@ -78,3 +79,12 @@ def load_entry_animation():
             
     return entry_animation  
     
+def load_jumper_animation():
+    global jumper_animation
+    
+    if jumper_animation == None:
+        jumper_animation = []
+        for i in range(6):
+            jumper_animation.append(loader_with_scale(f'game/res/jumper/0{i}.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
+            
+    return jumper_animation  

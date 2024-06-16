@@ -2,16 +2,17 @@ import pygame
 
 from game.game_state.menu import Game_menu
 from game.game_state.playing import Playing
-from game.game_state.state import Game_state
+from game.game_state.state import Game_state, State_control
 from game.lib.font import Game_font
 from game.utils.loader import loader
 from ..utils.constants.game_constant import Game_constant 
 from ..lib.sound import SOUND_END_EVENT, get_sound
 from game.game_state.high_score import High_score
+from game.database import High_score_model
 
 GAME_TICK = 120
 
-class Game:
+class Game(State_control):
     _state = Game_state.menu
     _tick = 0
     

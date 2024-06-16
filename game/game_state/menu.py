@@ -1,7 +1,7 @@
 
 import pygame
 
-from game.game_state.state import Game_state
+from game.game_state.state import Game_state, State_control
 from game.levels.background import draw_background
 from game.lib.font import Game_font
 from game.lib.inputs import Key_events, Mouse_events
@@ -14,7 +14,7 @@ from game.utils.loader import loader_with_scale
 IMAGE_BG = loader_with_scale('game/res/Background/menu.png', Game_constant.GAME_WIDTH, Game_constant.GAME_HEIGHT)
 
 class Game_menu(Key_events, Mouse_events):
-    def __init__(self, game) -> None:
+    def __init__(self, game: State_control) -> None:
         self.game = game
         self.buttons: list[Button] = []
         self.buttons.append(Play_button(game))

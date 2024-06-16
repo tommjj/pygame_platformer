@@ -7,8 +7,9 @@ from game.utils.constants.game_constant import Game_constant
 from game.utils.helper import can_move_here, get_entity_x_pos_next_to_wall, get_entity_y_pos_under_roof_of_above_floor, is_entity_on_floor
 from game.utils.loader import load_player_animations
 
+MAX_LIFE_POINT = 5
+
 class Player(Entity):
-    
     ani_tick = 0
     ani_index = 0
     ani_speed = 15
@@ -41,7 +42,7 @@ class Player(Entity):
     
     hit_box = pygame.Rect(0 , 0, 19 * Game_constant.SCALE, 28 * Game_constant.SCALE)
     
-    life_points = 5
+    life_points = MAX_LIFE_POINT
         
     def __init__(self, playing) -> None:
         self.playing = playing
@@ -58,7 +59,7 @@ class Player(Entity):
         
         if not self.dead: return
         if self.life_points <= 0:
-            pass
+            self.playing.game_over()
         else:
             self.playing.level_manager.reset()
     
@@ -75,6 +76,9 @@ class Player(Entity):
         self.air_speed = self.jump_speed
         get_sound().play_sfx(get_sound().jump)
         self.jump = False
+        
+    def is_alive(self):
+        return not self.die
         
     def set_animation(self):
         priv_ani = self.player_action
@@ -208,6 +212,7 @@ class Player(Entity):
         if  self.die:
             self.die = False
             self.dead = False
+            self.air_speed = 0
             
             if not self.in_air:
                 if not is_entity_on_floor(self.hit_box, self.playing.level_manager.get_current_map()):
@@ -215,3 +220,10 @@ class Player(Entity):
                     
     def win(self):
         self.playing.level_manager.next_level()
+        
+    def reset(self):
+        self.life_points = MAX_LIFE_POINT
+        self.in_air = True
+        self.die = False
+        self.dead = False
+        self.air_speed = 0
