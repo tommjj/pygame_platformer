@@ -7,8 +7,6 @@ from game.utils.constants.game_constant import Dir, Game_constant
 from game.utils.helper import can_move_here
 from game.utils.loader import load_bullet_animation
 
-
-
 class Projectile_manger:
     def get_target_hit_box(self) -> pygame.Rect:
         pass

@@ -154,7 +154,9 @@ class Player(Entity):
                 self.in_air = True
     
         if self.in_air:
-            if can_move_here(self.hit_box.x , self.hit_box.y + self.air_speed, self.hit_box.width - 1, self.hit_box.height, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
+            self.check_attack()
+            
+            if can_move_here(self.hit_box.x , self.hit_box.y + self.air_speed, self.hit_box.width - 1, self.hit_box.height - 1, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
                 self.hit_box.y += self.air_speed
                 self.air_speed += self.gravity
                 self.update_x_pos(x_speed)
@@ -175,7 +177,7 @@ class Player(Entity):
     def update_x_pos(self, x_speed):
         if self.die: return
         
-        if can_move_here(self.hit_box.x + x_speed , self.hit_box.y , self.hit_box.width, self.hit_box.height -0.2, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
+        if can_move_here(self.hit_box.x + x_speed , self.hit_box.y , self.hit_box.width, self.hit_box.height -1.5, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
             self.hit_box.x += x_speed
         else:
             self.hit_box.x = get_entity_x_pos_next_to_wall(self.hit_box, x_speed)
@@ -196,8 +198,14 @@ class Player(Entity):
             self.jump = True
         if event.key == pygame.K_r:
             self.die = True
-        if event.key == pygame.K_1:
-            print(self.levels_manager.get_current_map())
+            
+    def check_attack(self):
+        if self.air_speed <= 0: return
+        
+        for bot in self.playing.level_manager.get_bots():
+            if bot.hit(self.hit_box.x, self.hit_box.y + self.air_speed, self.hit_box.w, self.hit_box.h):
+                self.air_speed = -1.5
+                self.in_air = True
             
     def key_up(self ,event: pygame.event.Event):
         if event.key == pygame.K_d:

@@ -8,6 +8,9 @@ NUMBER_OF_TILES = 128
 
 player_scale = None
 player_animations = None
+
+bot_01_animations = None
+
 card_animation = None
 entry_animation = None
 jumper_animation = None
@@ -170,4 +173,29 @@ def load_bullet_animation(dir: Dir):
                 bullet_animation_top.append(pygame.transform.rotate(bullet_animation[i], 90))
         return bullet_animation_top
  
+ 
+def load_bot_01_animations():
+    global bot_01_animations
+    
+    if bot_01_animations == None:
+        bot_01_animations = []
+        
+        bot_01_animations.append([loader_with_scale('game/res/sprite/robot-1/idle/i_0.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE),
+                                  loader_with_scale('game/res/sprite/robot-1/idle/i_1.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE),
+                                  loader_with_scale('game/res/sprite/robot-1/idle/i_2.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE),
+                                  loader_with_scale('game/res/sprite/robot-1/idle/i_3.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE)])
+        
+        bot_01_animations.append([loader_with_scale('game/res/sprite/robot-1/walk/w_0.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE),
+                                  loader_with_scale('game/res/sprite/robot-1/walk/w_1.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE),
+                                  loader_with_scale('game/res/sprite/robot-1/walk/w_2.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE),
+                                  loader_with_scale('game/res/sprite/robot-1/walk/w_3.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE),
+                                  loader_with_scale('game/res/sprite/robot-1/walk/w_4.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE),
+                                  loader_with_scale('game/res/sprite/robot-1/walk/w_5.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE)])
+        
+        bot_01_animations.append([loader_with_scale('game/res/sprite/robot-1/turn-off/0.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE)])
+                            
+        bot_01_animations.append([loader_with_scale('game/res/sprite/robot-1/hurt/00.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE)])
+        
+    return bot_01_animations
+        
     

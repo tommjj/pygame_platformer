@@ -6,11 +6,12 @@ from game.utils.constants.game_constant import Game_constant
 # from ..utils.constants.game_constant import
 
 
-class Game_level:
+class Game_level():
     def __init__(self) -> None:
         self.map: list[list[int]] = [[]]
         self.entities: list[Entity] = []
         self.block_entities: list[Entity] = []
+        self.bots: list[Entity] = []
 
     def set_player_spawn(self, x: int, y: int):
         self.player_spawn_x = x
@@ -23,6 +24,10 @@ class Game_level:
         self.map = map
 
     def add_entity(self, entity):
+        self.entities.append(entity)
+        
+    def add_bot(self, entity):
+        self.bots.append(entity)
         self.entities.append(entity)
         
     def add_block_entity(self, entity):

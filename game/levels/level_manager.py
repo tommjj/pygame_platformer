@@ -7,11 +7,10 @@ from game.levels.levels_builder.level_builder import NUMBER_OF_LEVEL, get_level_
 from game.utils.constants.game_constant import Game_constant
 from game.utils.loader import NUMBER_OF_TILES, load_blocks
 
-START_LEVEL = 4
+START_LEVEL = 1
 
 class Levels_manager:
     level: Game_level = []
-    traps: list[Entity] = []
     layout: list[list[int]] = []
     current_level = START_LEVEL
 
@@ -28,9 +27,12 @@ class Levels_manager:
     def get_block_entities(self):
         return self.level.block_entities
 
+    def get_bots(self):
+        return self.level.bots
+    
     def update(self):
-        for trap in self.level.entities:
-            trap.update()
+        for entity in self.level.entities:
+            entity.update()
 
     def draw_background(self, surface: pygame.Surface):
         draw_background(surface, self.playing.player.hit_box.x)
@@ -45,8 +47,8 @@ class Levels_manager:
                         surface.blit(self.blocks[block], (Game_constant.TILES_SIZE * x,
                                      Game_constant.TILES_SIZE * y, Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
 
-        for trap in self.level.entities:
-            trap.draw(surface)
+        for entity in self.level.entities:
+            entity.draw(surface)
 
     def draw_layout(self, surface: pygame.Surface):
         for y, row in enumerate(self.layout):

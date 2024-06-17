@@ -11,11 +11,18 @@ class Playing(Key_events, Mouse_events):
     level_manager = None
     
     def __init__(self, game: State_control) -> None:
+        super().__init__()
         self.game = game
         self.player = Player(self)
         self.level_manager = Levels_manager(self)
         self.life_bar = Life_bar(self.player)
         
+    def get_level_manager(self) -> Levels_manager:
+        return self.level_manager
+
+    def get_player(self) -> Player:
+        return self.player
+    
     def reset(self):
         self.player.reset()
         self.level_manager.current_level = 1

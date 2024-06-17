@@ -20,8 +20,6 @@ def can_move_here(x, y, width, height ,map: list[list[int]], block_entities: lis
     return can_move
 
 def is_solid(x: float, y: float, map: list[list[int]] ):
-    max_width = len(map[0]) * Game_constant.TILES_SIZE
-    
     if (x < 0):
         return True    
     if (y < 0 or y >= Game_constant.GAME_HEIGHT):

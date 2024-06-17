@@ -1,3 +1,4 @@
+from game.entities.bot import Bot
 from game.entities.card import Card
 from game.entities.entry import Entry
 from game.entities.trap import Nail_trap
@@ -36,6 +37,8 @@ def level_01_builder(playing):
     map.add_entity(Nail_trap(playing, 13 , 10))
     map.add_entity(Nail_trap(playing, 14 , 10))
     map.add_entity(Nail_trap(playing, 15 , 10))
+    
+    map.add_bot(Bot(playing, 18 ,10))
     
     card = Card(playing, 18 , 11)
     entry = Entry(27, 10)

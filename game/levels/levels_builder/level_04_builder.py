@@ -7,7 +7,6 @@ from game.entities.trap import Nail_trap
 from game.levels.level import Game_level
 from game.utils.constants.game_constant import Dir
 
-
 def level_04_builder(playing):
     map = Game_level()
     map.set_map([[15, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 35, 41, 41, 34, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 13],
