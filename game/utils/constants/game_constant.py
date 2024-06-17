@@ -17,4 +17,10 @@ class Game_state(Enum):
     SELECT_LEVEL="SELECT_LEVEL"
     PAUSE = "PAUSE"
     
+class Dir(Enum):
+    TOP = "TOP"
+    DOWN = "BOTTOM"
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"
+    
     

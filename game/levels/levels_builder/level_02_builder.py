@@ -3,6 +3,7 @@ from game.entities.die_zone import Die_zone
 from game.entities.entry import Entry
 from game.entities.trap import Nail_trap
 from game.levels.level import Game_level
+from game.utils.constants.game_constant import Dir
 
 
 def level_02_builder(playing):
@@ -42,10 +43,10 @@ def level_02_builder(playing):
    
     map.set_player_spawn(0 , 11)
 
-    map.add_entity(Nail_trap(playing, 15, 10, Nail_trap.RIGHT))
+    map.add_entity(Nail_trap(playing, 15, 10, Dir.RIGHT))
     map.add_entity(Nail_trap(playing, 6, 5))
     map.add_entity(Nail_trap(playing, 3, 3))
-    map.add_entity(Nail_trap(playing, 13, 10, Nail_trap.TOP))
+    map.add_entity(Nail_trap(playing, 13, 10, Dir.TOP))
     
     map.add_entity(Die_zone(playing, 6, 14, 10, 1))
     

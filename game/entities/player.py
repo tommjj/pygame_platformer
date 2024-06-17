@@ -64,6 +64,10 @@ class Player(Entity):
             self.playing.level_manager.reset()
     
     def jump_handler(self):
+        if self.jump_speed > self.air_speed:
+            self.jump = False
+            return
+        
         if self.in_air and not self.double_jump:
             self.air_speed = self.jump_speed
             self.double_jump = True
@@ -171,8 +175,7 @@ class Player(Entity):
     def update_x_pos(self, x_speed):
         if self.die: return
         
-        
-        if can_move_here(self.hit_box.x + x_speed , self.hit_box.y , self.hit_box.width, self.hit_box.height -0.1, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
+        if can_move_here(self.hit_box.x + x_speed , self.hit_box.y , self.hit_box.width, self.hit_box.height -0.2, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
             self.hit_box.x += x_speed
         else:
             self.hit_box.x = get_entity_x_pos_next_to_wall(self.hit_box, x_speed)
@@ -213,6 +216,7 @@ class Player(Entity):
             self.die = False
             self.dead = False
             self.air_speed = 0
+            self.jump = False
             
             if not self.in_air:
                 if not is_entity_on_floor(self.hit_box, self.playing.level_manager.get_current_map()):
@@ -226,4 +230,5 @@ class Player(Entity):
         self.in_air = True
         self.die = False
         self.dead = False
+        self.jump = False
         self.air_speed = 0

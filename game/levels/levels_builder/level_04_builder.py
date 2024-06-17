@@ -2,8 +2,10 @@ from game.entities.card import Card
 from game.entities.die_zone import Die_zone
 from game.entities.entry import Entry
 from game.entities.jumper import Jumper
+from game.entities.shooter import Shooter
 from game.entities.trap import Nail_trap
 from game.levels.level import Game_level
+from game.utils.constants.game_constant import Dir
 
 
 def level_04_builder(playing):
@@ -43,17 +45,18 @@ def level_04_builder(playing):
     map.set_player_spawn(0 , 11)
 
     map.add_entity(Die_zone(playing, 4, 14, 21, 1))
-    map.add_entity(Nail_trap(playing, 13, 7, Nail_trap.TOP))
-    map.add_entity(Nail_trap(playing, 14, 7, Nail_trap.TOP))
-    map.add_entity(Nail_trap(playing, 15, 7, Nail_trap.TOP))
-    map.add_entity(Nail_trap(playing, 16, 7, Nail_trap.TOP))
-    map.add_entity(Nail_trap(playing, 12, 6, Nail_trap.RIGHT))
-    map.add_entity(Nail_trap(playing, 17, 6, Nail_trap.LEFT))
+    map.add_entity(Nail_trap(playing, 13, 7, Dir.TOP))
+    map.add_entity(Nail_trap(playing, 14, 7, Dir.TOP))
+    map.add_entity(Nail_trap(playing, 15, 7, Dir.TOP))
+    map.add_entity(Nail_trap(playing, 16, 7, Dir.TOP))
+    map.add_entity(Nail_trap(playing, 12, 6, Dir.RIGHT))
+    map.add_entity(Nail_trap(playing, 17, 6, Dir.LEFT))
     
     map.add_entity(Jumper(playing, 3, 11))
     map.add_entity(Jumper(playing, 14, 10))
     map.add_entity(Jumper(playing, 15, 10))
     map.add_entity(Jumper(playing, 16, 11))
+    map.add_entity(Shooter(playing, 22, 4, Dir.DOWN, attack_tick=120, attack_interval=80))
     
     
     card = Card(playing, 11 , 5)

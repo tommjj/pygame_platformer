@@ -2,7 +2,7 @@
 import os
 import pygame
 
-from game.utils.constants.game_constant import Game_constant
+from game.utils.constants.game_constant import Dir, Game_constant
 
 NUMBER_OF_TILES = 128
 
@@ -11,6 +11,16 @@ player_animations = None
 card_animation = None
 entry_animation = None
 jumper_animation = None
+
+shooter_animation = None
+shooter_animation_left = None
+shooter_animation_top = None
+shooter_animation_down = None
+
+bullet_animation = None
+bullet_animation_left = None
+bullet_animation_top = None
+bullet_animation_down = None
 
 blocks = None
 
@@ -88,3 +98,76 @@ def load_jumper_animation():
             jumper_animation.append(loader_with_scale(f'game/res/jumper/0{i}.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
             
     return jumper_animation  
+
+
+def load_shooter_animation(dir: Dir):
+    global shooter_animation
+    global shooter_animation_left 
+    global shooter_animation_top 
+    global shooter_animation_down 
+    
+    if shooter_animation == None:
+        shooter_animation = []
+        for i in range(5):
+            shooter_animation.append(loader_with_scale(f'game/res/shooter/{i}.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
+            
+    if dir == Dir.RIGHT:
+        return shooter_animation
+    
+    if dir == Dir.LEFT:
+        if shooter_animation_left == None:
+            shooter_animation_left = []
+            for i in range(5):
+                shooter_animation_left.append(pygame.transform.rotate(shooter_animation[i], 180))
+        return shooter_animation_left
+    
+    if dir == Dir.DOWN:
+        if shooter_animation_down == None:
+            shooter_animation_down = []
+            for i in range(5):
+                shooter_animation_down.append(pygame.transform.rotate(shooter_animation[i], -90))
+        return shooter_animation_down
+    
+    if dir == Dir.TOP:
+        if shooter_animation_top == None:
+            shooter_animation_top = []
+            for i in range(5):
+                shooter_animation_top.append(pygame.transform.rotate(shooter_animation[i], 90))
+        return shooter_animation_top
+
+def load_bullet_animation(dir: Dir):
+    global bullet_animation
+    global bullet_animation_left
+    global bullet_animation_top 
+    global bullet_animation_down
+
+    if bullet_animation == None:
+        bullet_animation = []
+        for i in range(4):
+            bullet_animation.append(loader_with_scale(f'game/res/bullets/b_{i}.png', Game_constant.SCALE * 16, Game_constant.SCALE * 16))
+    
+    if dir == Dir.RIGHT:
+        return bullet_animation
+    
+    if dir == Dir.LEFT:
+        if bullet_animation_left == None:
+            bullet_animation_left = []
+            for i in range(4):
+                bullet_animation_left.append(pygame.transform.rotate(bullet_animation[i], 180))
+        return bullet_animation_left
+    
+    if dir == Dir.DOWN:
+        if bullet_animation_down == None:
+            bullet_animation_down = []
+            for i in range(4):
+                bullet_animation_down.append(pygame.transform.rotate(bullet_animation[i], -90))
+        return bullet_animation_down
+    
+    if dir == Dir.TOP:
+        if bullet_animation_top == None:
+            bullet_animation_top = []
+            for i in range(4):
+                bullet_animation_top.append(pygame.transform.rotate(bullet_animation[i], 90))
+        return bullet_animation_top
+ 
+    
