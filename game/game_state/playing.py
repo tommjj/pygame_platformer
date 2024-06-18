@@ -97,8 +97,6 @@ class Playing(Key_events, Mouse_events, Playing_state_control, Get_player):
     def key_down(self ,event: pygame.event.Event):
         if self.state == Playing_state.PLAY:
             self.player.key_down(event)
-            if event.key == pygame.K_r:
-                self.reset()
             if event.key == pygame.K_ESCAPE:
                 self.set_state(Playing_state.PAUSE)
             

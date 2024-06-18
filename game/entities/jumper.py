@@ -1,5 +1,6 @@
 import pygame
 from game.entities.entity import Entity
+from game.entities.platform import Get_player
 from game.lib.sound import get_sound
 from game.utils.constants.game_constant import Game_constant
 from game.utils.loader import load_jumper_animation
@@ -8,7 +9,7 @@ from game.utils.loader import load_jumper_animation
 class Jumper(Entity):
     jump_speed = -7
     
-    def __init__(self,playing , x: int, y: int ) -> None:
+    def __init__(self,playing : Get_player, x: int, y: int ) -> None:
         super().__init__()
         self.playing = playing
         self.hit_box = pygame.Rect(x * Game_constant.TILES_SIZE, y * Game_constant.TILES_SIZE + 24 * Game_constant.SCALE, 

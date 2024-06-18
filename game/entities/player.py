@@ -3,6 +3,7 @@ import pygame
 from game.entities.entity import Entity
 from game.lib.sound import get_sound
 from game.utils.constants import player_constant
+from game.utils.constants.player_constant import Player_controls
 from game.utils.constants.game_constant import Game_constant
 from game.utils.helper import can_move_here, get_entity_x_pos_next_to_wall, get_entity_y_pos_under_roof_of_above_floor, is_entity_on_floor
 from game.utils.loader import load_player_animations
@@ -17,7 +18,6 @@ class Player(Entity):
     animations = [[]]
     
     moving = False
-    attacking = False 
     double_jump = False
     left = False
     right = False
@@ -191,14 +191,14 @@ class Player(Entity):
           
         
     def key_down(self ,event: pygame.event.Event):
-        if event.key == pygame.K_d:
+        if event.key == Player_controls.RIGHT:
             self.right = True
-        if event.key == pygame.K_a:
+        if event.key == Player_controls.LEFT:
             self.left = True
-        if event.key == pygame.K_SPACE:
+        if event.key == Player_controls.JUMP:
             self.jump = True
-        if event.key == pygame.K_r:
-            self.die = True
+        if event.key == Player_controls.RESET:
+            self.to_die()
             
     def check_attack(self):
         if self.air_speed <= 0: return
@@ -210,9 +210,9 @@ class Player(Entity):
                 self.double_jump = False
             
     def key_up(self ,event: pygame.event.Event):
-        if event.key == pygame.K_d:
+        if event.key == Player_controls.RIGHT:
             self.right = False
-        if event.key == pygame.K_a:
+        if event.key == Player_controls.LEFT:
             self.left = False 
             
     def to_die(self):

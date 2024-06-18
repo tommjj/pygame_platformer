@@ -71,18 +71,17 @@ class Result(Key_events, Mouse_events, Save_score):
         self.back_to_menu_button.draw(surface)
     
     def key_down(self ,event: pygame.event.Event):
-        pass
-            
-    def key_up(self ,event: pygame.event.Event):
         if event.key >= pygame.K_0 and event.key <= pygame.K_z:
             if len(self.username) < MAX_NAME_LEN:
                 self.username += pygame.key.name(event.key)
         if event.key == pygame.K_SPACE:
             if len(self.username) < MAX_NAME_LEN:
                 self.username += '_'
-        
         if event.key == pygame.K_BACKSPACE:
             self.username = self.username[:-1]
+            
+    def key_up(self ,event: pygame.event.Event):
+       pass
     
     def mouse_up(self, event: Event):
         self.back_to_menu_button.mouse_up(event)

@@ -1,6 +1,5 @@
 import pygame
 
-from game.entities.card import Card
 from game.entities.entity import Entity
 from game.entities.player import Player
 from game.utils.constants.game_constant import Game_constant
@@ -29,7 +28,7 @@ class Platform(Entity):
         return self.hit_box
     
     def set_pos(self, x, y):
-        self.hit_box = pygame.Rect(x * Game_constant.TILES_SIZE, y * Game_constant.TILES_SIZE, Game_constant.TILES_SIZE, 2 * Game_constant.TILES_SIZE)
+        self.hit_box = pygame.Rect(x * Game_constant.TILES_SIZE, y * Game_constant.TILES_SIZE, Game_constant.TILES_SIZE, Game_constant.TILES_SIZE)
     
     def update(self):
         self.update_animation()

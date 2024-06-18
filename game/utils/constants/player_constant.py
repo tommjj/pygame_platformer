@@ -1,5 +1,7 @@
 from enum import Enum
 
+import pygame
+
 IDLE = 0
 RUNNING = 1
 JUMP = 2
@@ -20,3 +22,9 @@ def get_sprites_amount(player_action):
     if player_action == DEAD:
         return 13
     return 0
+
+class Player_controls:
+    LEFT = pygame.K_a
+    RIGHT = pygame.K_d
+    JUMP = pygame.K_SPACE
+    RESET = pygame.K_r
