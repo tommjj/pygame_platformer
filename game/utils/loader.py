@@ -14,6 +14,7 @@ bot_01_animations = None
 card_animation = None
 entry_animation = None
 jumper_animation = None
+platform_animation = None
 
 shooter_animation = None
 shooter_animation_left = None
@@ -198,4 +199,12 @@ def load_bot_01_animations():
         
     return bot_01_animations
         
+def load_platform_animation():
+    global platform_animation
+    
+    if platform_animation == None:
+        platform_animation = []
+        for i in range(8):
+            platform_animation.append(loader_with_scale(f'game/res/platform/p_{i}.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
+    return platform_animation
     

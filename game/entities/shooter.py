@@ -7,7 +7,6 @@ from game.utils.constants.game_constant import Dir, Game_constant
 from game.utils.loader import load_shooter_animation
 
 
-
 class Shooter(Entity, Projectile_manger):
     def __init__(self, playing , x: int, y: int, dir: Dir = Dir.RIGHT ,attack_tick: int = 0 , attack_interval = 120) -> None:
         super().__init__()

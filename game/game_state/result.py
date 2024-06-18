@@ -12,7 +12,7 @@ from game.database import High_score_model
 
 BG_IMAGE = loader_with_scale('game/res/Background/result_bg.png', Game_constant.GAME_WIDTH, Game_constant.GAME_HEIGHT)
 
-MAX_NAME_LEN = 32
+MAX_NAME_LEN = 16
 
 class Result(Key_events, Mouse_events, Save_score):
     FINISHED = "FINISHED"
@@ -23,7 +23,7 @@ class Result(Key_events, Mouse_events, Save_score):
         super().__init__()
         
         self.username = ""
-        self.back_to_menu_button = Back_to_menu_button(self, game, 18 * Game_constant.TILES_SIZE, 11 * Game_constant.TILES_SIZE)
+        self.back_to_menu_button = Back_to_menu_button(self, game, 17.5 * Game_constant.TILES_SIZE, 11.5 * Game_constant.TILES_SIZE)
         
         self.header_txt_finished = Game_font(int(92 * Game_constant.SCALE)).render(self.FINISHED, True, (255, 255, 255))
         self.header_txt_game_over = Game_font(int(92 * Game_constant.SCALE)).render(self.GAME_OVER, True, (255, 255, 255))

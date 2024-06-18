@@ -24,7 +24,7 @@ class Bot_state:
             return 1
         return 0
 
-class Bot(Entity):
+class Bot_screen(Entity):
     gravity = 0.05 * Game_constant.SCALE
     fall_speed_after_collision = 0.5 * Game_constant.SCALE
     moving_speed = 0.5 * Game_constant.SCALE

@@ -1,6 +1,7 @@
 import pygame
 from pygame.event import Event
 
+from game.entities.platform import Get_player
 from game.entities.player import Player
 from game.game_state.state import Game_state, Playing_state, Playing_state_control, State_control
 from game.levels.level_manager import Levels_manager
@@ -13,7 +14,9 @@ from .result import Result
 
 OVER_LAY = loader_with_scale('game/res/ui/overlay.png', Game_constant.GAME_WIDTH, Game_constant.GAME_HEIGHT)
 
-class Playing(Key_events, Mouse_events, Playing_state_control):
+START_LEVEL = 5
+
+class Playing(Key_events, Mouse_events, Playing_state_control, Get_player):
     player = None
     level_manager = None
     
@@ -52,7 +55,7 @@ class Playing(Key_events, Mouse_events, Playing_state_control):
         self.score = 0
         self.set_state(Playing_state.PLAY)
         self.player.reset()
-        self.level_manager.current_level = 1
+        self.level_manager.current_level = START_LEVEL
         self.level_manager.reset()
         
     def set_level(self, level):

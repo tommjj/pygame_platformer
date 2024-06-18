@@ -36,9 +36,12 @@ class Player(Entity):
     jump_speed = -2 * Game_constant.SCALE
     fall_speed_after_collision = 0.5 * Game_constant.SCALE
     in_air = True
+    MAX_FALL_SPEED = 8
     
     flip_x = 0
     flip_w = 1
+    
+    is_forgive = False
     
     hit_box = pygame.Rect(0 , 0, 19 * Game_constant.SCALE, 28 * Game_constant.SCALE)
     
@@ -70,7 +73,8 @@ class Player(Entity):
         
         if self.in_air and not self.double_jump:
             self.air_speed = self.jump_speed
-            self.double_jump = True
+            if not self.is_forgive:
+                self.double_jump = True
             get_sound().play_sfx(get_sound().jump)
         elif self.in_air: 
             self.jump = False
@@ -110,17 +114,15 @@ class Player(Entity):
         self.ani_tick += 1
         
         if self.ani_tick > self.ani_speed:
+            self.is_forgive = False
+            
             if self.player_action == player_constant.DEAD:
                 is_last_f = self.ani_index >= player_constant.get_sprites_amount(self.player_action) - 1
                 
                 self.ani_index = player_constant.get_sprites_amount(self.player_action) - 1 if is_last_f else self.ani_index + 1
                 if is_last_f: self.dead = True
-            
-            elif self.player_action == player_constant.JUMP:
-                self.ani_index = self.ani_index - 1 if self.ani_index >= player_constant.get_sprites_amount(self.player_action) - 1 else self.ani_index + 1
-                return
-            else:  
-                self.ani_index = 0 if self.ani_index >= player_constant.get_sprites_amount(self.player_action) - 1 else self.ani_index + 1
+             
+            self.ani_index = 0 if self.ani_index >= player_constant.get_sprites_amount(self.player_action) - 1 else self.ani_index + 1
             self.ani_tick = 0
     
     def update_pos(self):
@@ -133,6 +135,11 @@ class Player(Entity):
         if self.jump:
             if not self.die:
                 self.jump_handler()
+        
+        if not self.in_air:
+            if not is_entity_on_floor(self.hit_box, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
+                self.in_air = True
+                self.is_forgive = True
         
         if not self.in_air:
             if not self.left and not self.right or self.left and self.right:
@@ -149,16 +156,15 @@ class Player(Entity):
             self.flip_x = 0
             self.flip_w = 1
             
-        if not self.in_air:
-            if not is_entity_on_floor(self.hit_box, self.playing.level_manager.get_current_map()):
-                self.in_air = True
+        
     
         if self.in_air:
             self.check_attack()
-            
+
             if can_move_here(self.hit_box.x , self.hit_box.y + self.air_speed, self.hit_box.width - 1, self.hit_box.height - 1, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
                 self.hit_box.y += self.air_speed
-                self.air_speed += self.gravity
+                if self.air_speed < self.MAX_FALL_SPEED:
+                    self.air_speed += self.gravity
                 self.update_x_pos(x_speed)
             else:
                 self.hit_box.y = get_entity_y_pos_under_roof_of_above_floor(self.hit_box, self.air_speed)

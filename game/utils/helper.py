@@ -60,11 +60,18 @@ def get_entity_x_pos_next_to_wall(hit_box: pygame.Rect, x_speed):
         return current_tile * Game_constant.TILES_SIZE
     
 
-def is_entity_on_floor(hit_box: pygame.Rect, map: list[list[int]]):
-    if not is_solid(hit_box.x + hit_box.width, hit_box.y + hit_box.height + 1, map):
-        if not is_solid(hit_box.x, hit_box.y + hit_box.height + 1, map): 
-            return False
-    return True
+def is_entity_on_floor(hit_box: pygame.Rect, map: list[list[int]], block_entities: list[Entity] = []):
+    
+    if is_solid(hit_box.x + hit_box.width, hit_box.y + hit_box.height + 1, map):
+        return True
+    if is_solid(hit_box.x, hit_box.y + hit_box.height + 1, map): 
+        return False
+        
+    for e in block_entities:
+        if e.get_hit_box().colliderect(hit_box.x, hit_box.y, hit_box.width, hit_box.height + 2.5 * Game_constant.SCALE):
+            return True
+                    
+    return False
 
 
 def is_tiles(block) -> bool:
