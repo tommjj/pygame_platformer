@@ -21,6 +21,7 @@ class Sound:
         self.jumper = mixer.Sound("game/res/audio/jumper.ogg")
         self.card_collect = mixer.Sound("game/res/audio/card_collect.ogg")
         self.stun_bot = mixer.Sound("game/res/audio/stun_bot.ogg")
+        self.open_doors = mixer.Sound("game/res/audio/open_doors.ogg")
         
     def play_sfx(self, sfx):
         if self.allowSFX:

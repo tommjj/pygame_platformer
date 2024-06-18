@@ -1,6 +1,7 @@
 import pygame
 
 from game.entities.platform import Get_player, Platform
+from game.lib.sound import get_sound
 from game.utils.constants.game_constant import Game_constant
 
 class Crumbling_platform(Platform):
@@ -22,6 +23,7 @@ class Crumbling_platform(Platform):
             if self.tick >= self.time_to_crash:
                 self.is_active = False
                 self.tick = 0
+                get_sound().play_sfx(get_sound().open_doors)
         
         if not self.is_active:
             self.tick += 1
@@ -29,6 +31,7 @@ class Crumbling_platform(Platform):
                 self.tick = 0
                 self.is_active = True
                 self.is_start_crash = False
+                get_sound().play_sfx(get_sound().open_doors)
         
         super().update()
         
