@@ -33,4 +33,5 @@ class Play_button(Button):
         
     def on_click(self):
         self.game.set_state(Game_state.playing)
+        self.game.playing.reset()
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)

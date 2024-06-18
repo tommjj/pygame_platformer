@@ -33,4 +33,5 @@ class High_score_button(Button):
         
     def on_click(self):
         self.game.set_state(Game_state.high_score)
+        self.game.high_score.reset()
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)

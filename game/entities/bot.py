@@ -1,5 +1,6 @@
 import pygame
 from game.entities.entity import Entity
+from game.lib.sound import get_sound
 from game.utils.bot_helper import is_floor
 from game.utils.constants.game_constant import Dir, Game_constant
 from game.utils.helper import can_move_here, get_entity_y_pos_under_roof_of_above_floor, is_entity_on_floor
@@ -53,7 +54,6 @@ class Bot(Entity):
         self.is_stunned = False
         
     def update(self):
-        
         if self.is_stunned:
             self.stun_tick += 1
             if self.stun_tick >= self.stun_time:
@@ -111,7 +111,8 @@ class Bot(Entity):
                 self.animation_index = 0
                 
     def hit(self, x, y, w, h):
-        if pygame.Rect(x, y + h + 1 * Game_constant.SCALE, w, 5 * Game_constant.SCALE
+        if self.is_stunned: return False
+        if pygame.Rect(x, y + h + 2 * Game_constant.SCALE, w, 5 * Game_constant.SCALE
                     ).colliderect(self.hit_box.x, self.hit_box.y, self.hit_box.w, 8 * Game_constant.SCALE):
             self.stun()
             return True
@@ -120,7 +121,8 @@ class Bot(Entity):
     def stun(self):
         self.stun_tick = 0
         self.set_state(Bot_state.OFF)
-        self.is_stunned = True        
+        self.is_stunned = True    
+        get_sound().play_sfx(get_sound().stun_bot)
                 
     def set_state(self, state):
         if self.state != state:

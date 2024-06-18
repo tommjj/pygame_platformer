@@ -20,6 +20,10 @@ class Levels_manager:
         self.reset()
 
         self.blocks = load_blocks()
+        
+        self.score = 120
+        self.score_reduce_tick = 0
+        self.score_reduce_speed = 120
 
     def get_current_map(self):
         return self.level.map
@@ -31,6 +35,12 @@ class Levels_manager:
         return self.level.bots
     
     def update(self):
+        self.score_reduce_tick += 1
+        if self.score_reduce_tick >= self.score_reduce_speed:
+            if self.score > 0:
+                self.score -= 1
+            self.score_reduce_tick = 0    
+        
         for entity in self.level.entities:
             entity.update()
 
@@ -66,6 +76,9 @@ class Levels_manager:
         x, y = self.level.get_player_spawn()
         self.playing.player.hit_box.x = x
         self.playing.player.hit_box.y = y
+        
+        self.score = 120
+        self.score_reduce_tick = 0
 
         self.playing.player.to_alive()
 

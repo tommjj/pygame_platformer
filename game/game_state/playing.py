@@ -1,12 +1,19 @@
 import pygame
+from pygame.event import Event
 
 from game.entities.player import Player
-from game.game_state.state import Game_state, State_control
+from game.game_state.state import Game_state, Playing_state, Playing_state_control, State_control
 from game.levels.level_manager import Levels_manager
+from game.levels.levels_builder.level_builder import NUMBER_OF_LEVEL
 from game.lib.inputs import Key_events, Mouse_events
 from game.ui.life_bar import Life_bar
+from game.utils.constants.game_constant import Game_constant
+from game.utils.loader import loader_with_scale
+from .result import Result
 
-class Playing(Key_events, Mouse_events):
+OVER_LAY = loader_with_scale('game/res/ui/overlay.png', Game_constant.GAME_WIDTH, Game_constant.GAME_HEIGHT)
+
+class Playing(Key_events, Mouse_events, Playing_state_control):
     player = None
     level_manager = None
     
@@ -17,13 +24,33 @@ class Playing(Key_events, Mouse_events):
         self.level_manager = Levels_manager(self)
         self.life_bar = Life_bar(self.player)
         
+        self.score = 0
+        
+        self.result = Result(game, self)
+        self.state = Playing_state.PLAY
+    
+    def set_state(self, game_state: Playing_state):
+        self.state = game_state
+    
     def get_level_manager(self) -> Levels_manager:
         return self.level_manager
 
     def get_player(self) -> Player:
         return self.player
+
+    def next_level(self):
+        self.score += self.level_manager.score
+        if self.level_manager.current_level < NUMBER_OF_LEVEL:
+            self.level_manager.next_level()
+        else:
+            self.score += (self.player.life_points - 1) * 120
+            self.result.set_score(self.score)
+            self.result.set_status(self.result.FINISHED)
+            self.set_state(Playing_state.RESULT)
     
     def reset(self):
+        self.score = 0
+        self.set_state(Playing_state.PLAY)
         self.player.reset()
         self.level_manager.current_level = 1
         self.level_manager.reset()
@@ -33,26 +60,66 @@ class Playing(Key_events, Mouse_events):
         self.level_manager.reset()
     
     def game_over(self):
-        self.game.set_state(Game_state.menu)
-        self.reset()
+        self.result.set_score(self.score)
+        self.result.set_status(self.result.GAME_OVER)
+        self.set_state(Playing_state.RESULT)
 
     def update(self):
-        self.player.update()
-        self.level_manager.update()
+        if self.state == Playing_state.PLAY:
+            self.player.update()
+            self.level_manager.update()
+        elif self.reset == Playing_state.RESULT:
+            self.result.update()
     
     def draw(self, surface: pygame.Surface):
-        self.level_manager.draw_background(surface)
-        self.level_manager.draw_tiles(surface)
+        if self.state == Playing_state.PLAY:
+            self.level_manager.draw_background(surface)
+            self.level_manager.draw_tiles(surface)
         
-        self.player.draw(surface)
-        self.life_bar.draw(surface)
+            self.player.draw(surface)
+            self.life_bar.draw(surface)
+            
+        elif self.state == Playing_state.PAUSE:
+            self.level_manager.draw_background(surface)
+            self.level_manager.draw_tiles(surface)
+        
+            self.player.draw(surface)
+            self.life_bar.draw(surface)
+            
+            surface.blit(OVER_LAY, (0, 0))
+            
+        elif self.state == Playing_state.RESULT:
+            self.result.draw(surface)
     
     def key_down(self ,event: pygame.event.Event):
-        self.player.key_down(event)
-        if event.key == pygame.K_r:
-            self.reset()
+        if self.state == Playing_state.PLAY:
+            self.player.key_down(event)
+            if event.key == pygame.K_r:
+                self.reset()
+            if event.key == pygame.K_ESCAPE:
+                self.set_state(Playing_state.PAUSE)
+            
+        elif self.state == Playing_state.RESULT:
+            self.result.key_down(event)
+            
+        elif self.state == Playing_state.PAUSE:
+            if event.key == pygame.K_ESCAPE:
+                self.set_state(Playing_state.PLAY)
             
     def key_up(self ,event: pygame.event.Event):
-        self.player.key_up(event)
+        if self.state == Playing_state.PLAY:
+            self.player.key_up(event)
+        elif self.state == Playing_state.RESULT:
+            self.result.key_up(event)
         
-        
+    def mouse_down(self, event: Event):
+        if self.state == Playing_state.RESULT:
+            self.result.mouse_down(event)
+    
+    def mouse_up(self, event: Event):
+        if self.state == Playing_state.RESULT:
+            self.result.mouse_up(event)
+    
+    def mouse_motion(self, event: Event):
+        if self.state == Playing_state.RESULT:
+            self.result.mouse_motion(event)

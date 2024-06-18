@@ -7,7 +7,7 @@ from game.utils.constants.game_constant import Game_constant
 from game.utils.helper import can_move_here, get_entity_x_pos_next_to_wall, get_entity_y_pos_under_roof_of_above_floor, is_entity_on_floor
 from game.utils.loader import load_player_animations
 
-MAX_LIFE_POINT = 5
+MAX_LIFE_POINT = 1
 
 class Player(Entity):
     ani_tick = 0
@@ -231,7 +231,7 @@ class Player(Entity):
                     self.in_air = True
                     
     def win(self):
-        self.playing.level_manager.next_level()
+        self.playing.next_level()
         
     def reset(self):
         self.life_points = MAX_LIFE_POINT
