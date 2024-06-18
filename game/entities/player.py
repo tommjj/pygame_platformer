@@ -34,12 +34,11 @@ class Player(Entity):
     air_speed = 0.0
     gravity = 0.05 * Game_constant.SCALE
     jump_speed = -2 * Game_constant.SCALE
-    fall_speed_after_collision = 0.5 * Game_constant.SCALE
+    FALL_SPEED_AFTER_COLLiSION = 0.5 * Game_constant.SCALE
     in_air = True
-    MAX_FALL_SPEED = 8
+    MAX_FALL_SPEED = 7
     
-    flip_x = 0
-    flip_w = 1
+    flip_x = False
     
     is_forgive = False
     
@@ -148,15 +147,11 @@ class Player(Entity):
         x_speed = 0
         if self.left:
             x_speed -= self.player_speed
-            self.flip_x = 60
-            self.flip_w = -1
+            self.flip_x = True
             
         if self.right:
             x_speed += self.player_speed
-            self.flip_x = 0
-            self.flip_w = 1
-            
-        
+            self.flip_x = False
     
         if self.in_air:
             self.check_attack()
@@ -173,7 +168,7 @@ class Player(Entity):
                     self.air_speed = 0
                     self.double_jump = False
                 else:
-                    self.air_speed = self.fall_speed_after_collision
+                    self.air_speed = self.FALL_SPEED_AFTER_COLLiSION
                 self.update_x_pos(x_speed)
         else:
             self.update_x_pos(x_speed)
@@ -210,8 +205,9 @@ class Player(Entity):
         
         for bot in self.playing.level_manager.get_bots():
             if bot.hit(self.hit_box.x, self.hit_box.y + self.air_speed, self.hit_box.w, self.hit_box.h):
-                self.air_speed = -1.5
+                self.air_speed = self.jump_speed
                 self.in_air = True
+                self.double_jump = False
             
     def key_up(self ,event: pygame.event.Event):
         if event.key == pygame.K_d:
@@ -245,4 +241,11 @@ class Player(Entity):
         self.die = False
         self.dead = False
         self.jump = False
+        
+        self.moving = False
+        self.double_jump = False
+        self.left = False
+        self.right = False
+        self.jump = False
+    
         self.air_speed = 0
