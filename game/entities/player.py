@@ -7,7 +7,7 @@ from game.utils.constants.game_constant import Game_constant
 from game.utils.helper import can_move_here, get_entity_x_pos_next_to_wall, get_entity_y_pos_under_roof_of_above_floor, is_entity_on_floor
 from game.utils.loader import load_player_animations
 
-MAX_LIFE_POINT = 1
+MAX_LIFE_POINT = 3
 
 class Player(Entity):
     ani_tick = 0
