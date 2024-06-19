@@ -13,8 +13,12 @@ bot_01_animations = None
 
 card_animation = None
 entry_animation = None
-jumper_animation = None
 platform_animation = None
+
+jumper_animation = None
+jumper_animation_left = None
+jumper_animation_right = None
+jumper_animation_down = None
 
 shooter_animation = None
 shooter_animation_left = None
@@ -93,15 +97,40 @@ def load_entry_animation():
             
     return entry_animation  
     
-def load_jumper_animation():
+def load_jumper_animation(dir: Dir):
     global jumper_animation
+    global jumper_animation_left
+    global jumper_animation_right
+    global jumper_animation_down
     
     if jumper_animation == None:
         jumper_animation = []
         for i in range(6):
             jumper_animation.append(loader_with_scale(f'game/res/jumper/0{i}.png', Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
-            
-    return jumper_animation  
+    if dir == Dir.TOP:
+        return jumper_animation  
+
+    if dir == Dir.RIGHT:
+        if jumper_animation_right == None:
+            jumper_animation_right = []
+            for i in range(6):
+                jumper_animation_right.append(pygame.transform.rotate(jumper_animation[i], -90))
+        return jumper_animation_right
+    
+    if dir == Dir.LEFT:
+        if jumper_animation_left == None:
+            jumper_animation_left = []
+            for i in range(6):
+                jumper_animation_left.append(pygame.transform.rotate(jumper_animation[i], 90))
+        return jumper_animation_left
+    
+    if dir == Dir.DOWN:
+        if jumper_animation_down == None:
+            jumper_animation_down = []
+            for i in range(6):
+                jumper_animation_down.append(pygame.transform.rotate(jumper_animation[i], 180))
+        return jumper_animation_down
+
 
 
 def load_shooter_animation(dir: Dir):

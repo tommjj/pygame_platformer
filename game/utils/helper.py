@@ -40,7 +40,7 @@ def is_tile_solid(x: int, y: int, map: list[list[int]]):
 
 
 def get_entity_y_pos_under_roof_of_above_floor(hit_box: pygame.Rect, air_speed):
-    current_tile = int(hit_box.y / Game_constant.TILES_SIZE)
+    current_tile = int((hit_box.y + (hit_box.h/ 2)) / Game_constant.TILES_SIZE)
     
     if air_speed > 0: # fall
         tile_y_pos = current_tile * Game_constant.TILES_SIZE
@@ -50,7 +50,7 @@ def get_entity_y_pos_under_roof_of_above_floor(hit_box: pygame.Rect, air_speed):
         return current_tile * Game_constant.TILES_SIZE
     
 def get_entity_x_pos_next_to_wall(hit_box: pygame.Rect, x_speed): 
-    current_tile = int(hit_box.x / Game_constant.TILES_SIZE)
+    current_tile = int((hit_box.x + hit_box.w/2) / Game_constant.TILES_SIZE)
     
     if x_speed > 0: 
         tile_x_pos = current_tile * Game_constant.TILES_SIZE

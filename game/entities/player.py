@@ -36,7 +36,10 @@ class Player(Entity):
     jump_speed = -2 * Game_constant.SCALE
     FALL_SPEED_AFTER_COLLiSION = 0.5 * Game_constant.SCALE
     in_air = True
-    MAX_FALL_SPEED = 7
+    MAX_FALL_SPEED = 10
+    
+    pushed_speed_x = 0
+    pushed_reduce_speed_x = 0.06 * Game_constant.SCALE
     
     flip_x = False
     
@@ -142,7 +145,8 @@ class Player(Entity):
         
         if not self.in_air:
             if not self.left and not self.right or self.left and self.right:
-                return
+                if self.pushed_speed_x == 0:
+                    return
         
         x_speed = 0
         if self.left:
@@ -178,17 +182,24 @@ class Player(Entity):
     def update_x_pos(self, x_speed):
         if self.die: return
         
-        if can_move_here(self.hit_box.x + x_speed , self.hit_box.y , self.hit_box.width, self.hit_box.height -1.5, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
-            self.hit_box.x += x_speed
+        if can_move_here(self.hit_box.x + x_speed + self.pushed_speed_x, self.hit_box.y , self.hit_box.width, self.hit_box.height -1.5, self.playing.level_manager.get_current_map(), self.playing.level_manager.get_block_entities()):
+            self.hit_box.x += x_speed + self.pushed_speed_x
+            if self.pushed_speed_x > self.pushed_reduce_speed_x:
+                self.pushed_speed_x -= self.pushed_reduce_speed_x 
+            elif self.pushed_speed_x < -self.pushed_reduce_speed_x:
+                self.pushed_speed_x += self.pushed_reduce_speed_x
+            else: 
+                self.pushed_speed_x = 0
+                
         else:
             self.hit_box.x = get_entity_x_pos_next_to_wall(self.hit_box, x_speed)
+            self.pushed_speed_x = 0
     
     def draw(self, surface: pygame.Surface):        
         
         # pygame.draw.rect(surface,(255, 0, 0), self.hit_box, 2)
         
         surface.blit(pygame.transform.flip(self.animations[self.player_action][self.ani_index], flip_x=self.flip_x, flip_y=0) , (self.hit_box.x - self.x_draw_off_set, self.hit_box.y - self.y_draw_off_set))  
-          
         
     def key_down(self ,event: pygame.event.Event):
         if event.key == Player_controls.RIGHT:
@@ -223,10 +234,19 @@ class Player(Entity):
             
     def to_alive(self):
         if  self.die:
+            self.in_air = True
             self.die = False
             self.dead = False
-            self.air_speed = 0
             self.jump = False
+        
+            self.moving = False
+            self.double_jump = False
+            self.left = False
+            self.right = False
+            self.jump = False
+            self.pushed_speed_x = 0
+    
+            self.air_speed = 0
             
             if not self.in_air:
                 if not is_entity_on_floor(self.hit_box, self.playing.level_manager.get_current_map()):
@@ -247,5 +267,6 @@ class Player(Entity):
         self.left = False
         self.right = False
         self.jump = False
+        self.pushed_speed_x = 0
     
         self.air_speed = 0

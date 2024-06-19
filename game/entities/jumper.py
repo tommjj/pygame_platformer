@@ -2,24 +2,40 @@ import pygame
 from game.entities.entity import Entity
 from game.entities.platform import Get_player
 from game.lib.sound import get_sound
-from game.utils.constants.game_constant import Game_constant
+from game.utils.constants.game_constant import Dir, Game_constant
 from game.utils.loader import load_jumper_animation
 
-
 class Jumper(Entity):
-    jump_speed = -7
+    jump_speed = 7
     
-    def __init__(self,playing : Get_player, x: int, y: int ) -> None:
+    def __init__(self, playing : Get_player, x: int, y: int, dir: Dir = Dir.TOP) -> None:
         super().__init__()
         self.playing = playing
-        self.hit_box = pygame.Rect(x * Game_constant.TILES_SIZE, y * Game_constant.TILES_SIZE + 24 * Game_constant.SCALE, 
-                                   Game_constant.TILES_SIZE, 8 * Game_constant.SCALE)
+        self.dir = dir
         
-        self.draw_offset_y = -24 * Game_constant.SCALE
+        if dir == Dir.TOP:
+            self.hit_box = pygame.Rect(x * Game_constant.TILES_SIZE, (y * Game_constant.TILES_SIZE) + (24 * Game_constant.SCALE), Game_constant.TILES_SIZE, 8 * Game_constant.SCALE)
+            self.draw_offset_x = 0
+            self.draw_offset_y = -24 *Game_constant.SCALE
+            
+        if dir == Dir.LEFT:
+            self.hit_box = pygame.Rect(x * Game_constant.TILES_SIZE + 24 * Game_constant.SCALE, (y * Game_constant.TILES_SIZE), 8 * Game_constant.SCALE, Game_constant.TILES_SIZE)
+            self.draw_offset_x = -24 * Game_constant.SCALE
+            self.draw_offset_y = 0
+            
+        if dir == Dir.DOWN:
+            self.hit_box = pygame.Rect(x * Game_constant.TILES_SIZE, (y * Game_constant.TILES_SIZE) , Game_constant.TILES_SIZE, 8 * Game_constant.SCALE)
+            self.draw_offset_x = 0
+            self.draw_offset_y = 0
+            
+        if dir == Dir.RIGHT:
+            self.hit_box = pygame.Rect(x * Game_constant.TILES_SIZE, (y * Game_constant.TILES_SIZE), 8 * Game_constant.SCALE, Game_constant.TILES_SIZE)
+            self.draw_offset_x = 0
+            self.draw_offset_y = 0
         
         self.animation_tick = 0
         self.animation_index = 0
-        self.animation = load_jumper_animation()
+        self.animation = load_jumper_animation(dir)
         self.animation_len = len(self.animation)
         self.animation_speed = 8
         self.is_active = False
@@ -28,9 +44,19 @@ class Jumper(Entity):
         if self.hit_box.colliderect(self.playing.player.get_hit_box()):
             if not self.is_active and self.playing.player.is_alive():
                 self.playing.player.in_air = True
-                self.playing.player.air_speed = self.jump_speed
+                
+                if self.dir == Dir.TOP:
+                    self.playing.player.air_speed = -self.jump_speed
+                if self.dir == Dir.LEFT:
+                    self.playing.player.pushed_speed_x = -self.jump_speed
+                if self.dir == Dir.DOWN:
+                    self.playing.player.air_speed = self.jump_speed
+                if self.dir == Dir.RIGHT:
+                    self.playing.player.pushed_speed_x = self.jump_speed
+                
                 get_sound().play_sfx(get_sound().jumper)
                 self.playing.player.jump = False
+                self.playing.player.double_jump = False
                 self.is_active = True
         
         self.update_animation()
@@ -48,6 +74,8 @@ class Jumper(Entity):
                 self.is_active = False
     
     def draw(self, surface: pygame.Surface):
-        surface.blit(self.animation[self.animation_index], (self.hit_box.x , self.hit_box.y + self.draw_offset_y, self.hit_box.w, self.hit_box.h))
+        pygame.draw.rect(surface, (255, 0, 0), self.hit_box, 2)
+        
+        surface.blit(self.animation[self.animation_index], (self.hit_box.x + self.draw_offset_x, self.hit_box.y + self.draw_offset_y, Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
     
     
