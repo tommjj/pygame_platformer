@@ -5,8 +5,9 @@ from game.levels.levels_builder.level_04_builder import level_04_builder
 from game.levels.levels_builder.level_05_builder import level_05_builder
 from game.levels.levels_builder.level_06_builder import level_06_builder
 from game.levels.levels_builder.level_07_builder import level_07_builder
+from game.levels.levels_builder.level_08_builder import level_08_builder
 
-NUMBER_OF_LEVEL = 7
+NUMBER_OF_LEVEL = 8
 
 def get_level_builder(playing, level: int):
     if level == 1:
@@ -23,3 +24,5 @@ def get_level_builder(playing, level: int):
         return level_06_builder(playing)
     if level == 7:
         return level_07_builder(playing)
+    if level == 8:
+        return level_08_builder(playing)
