@@ -14,7 +14,7 @@ from .result import Result
 
 OVER_LAY = loader_with_scale('game/res/ui/overlay.png', Game_constant.GAME_WIDTH, Game_constant.GAME_HEIGHT)
 
-START_LEVEL = 0
+START_LEVEL = 1
 
 class Playing(Key_events, Mouse_events, Playing_state_control, Get_player):
     player = None
