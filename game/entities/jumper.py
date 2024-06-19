@@ -6,7 +6,7 @@ from game.utils.constants.game_constant import Dir, Game_constant
 from game.utils.loader import load_jumper_animation
 
 class Jumper(Entity):
-    jump_speed = 7
+    push_speed = 4.65 * Game_constant.SCALE
     
     def __init__(self, playing : Get_player, x: int, y: int, dir: Dir = Dir.TOP) -> None:
         super().__init__()
@@ -46,13 +46,13 @@ class Jumper(Entity):
                 self.playing.player.in_air = True
                 
                 if self.dir == Dir.TOP:
-                    self.playing.player.air_speed = -self.jump_speed
+                    self.playing.player.air_speed = -self.push_speed
                 if self.dir == Dir.LEFT:
-                    self.playing.player.pushed_speed_x = -self.jump_speed
+                    self.playing.player.pushed_speed_x = -self.push_speed
                 if self.dir == Dir.DOWN:
-                    self.playing.player.air_speed = self.jump_speed
+                    self.playing.player.air_speed = self.push_speed
                 if self.dir == Dir.RIGHT:
-                    self.playing.player.pushed_speed_x = self.jump_speed
+                    self.playing.player.pushed_speed_x = self.push_speed
                 
                 get_sound().play_sfx(get_sound().jumper)
                 self.playing.player.jump = False
@@ -74,8 +74,6 @@ class Jumper(Entity):
                 self.is_active = False
     
     def draw(self, surface: pygame.Surface):
-        pygame.draw.rect(surface, (255, 0, 0), self.hit_box, 2)
-        
         surface.blit(self.animation[self.animation_index], (self.hit_box.x + self.draw_offset_x, self.hit_box.y + self.draw_offset_y, Game_constant.TILES_SIZE, Game_constant.TILES_SIZE))
     
     
